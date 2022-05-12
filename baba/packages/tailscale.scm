@@ -31,29 +31,52 @@ not support newer formats.  Since PKCS#12 uses weak encryption primitives, it
 SHOULD NOT be used for new applications.")
     (license license:bsd-3)))
 
+(define-public go-github-com-google-go-cmp
+  (package
+    (name "go-github-com-google-go-cmp")
+    (version "0.5.8")
+    (source
+      (origin
+        (method git-fetch)
+        (uri (git-reference
+               (url "https://github.com/google/go-cmp")
+               (commit (string-append "v" version))))
+        (file-name (git-file-name name version))
+        (sha256
+          (base32 "0563bczyrmv9ps2p6n8af0m1jsszwdmkdkrxkv6dbm5bwjihhfgk"))))
+    (build-system go-build-system)
+    (arguments '(#:import-path "github.com/google/go-cmp"))
+    (home-page "https://github.com/google/go-cmp")
+    (synopsis "Package for equality of Go values")
+    (description
+      "This package is intended to be a more powerful and safer alternative to
+@code{reflect.DeepEqual} for comparing whether two values are semantically
+equal.")
+    (license license:bsd-3)))
+
 (define-public go-github-com-aws-smithy-go
   (package
     (name "go-github-com-aws-smithy-go")
     (version "1.11.2")
     (source
-      (origin
-        (method git-fetch)
-        (uri (git-reference
-               (url "https://github.com/aws/smithy-go")
-               (commit (string-append "v" version))))
-        (file-name (git-file-name name version))
-        (sha256
-          (base32 "1sy7jwibmxlixklawfn6bfwvhnfzaw2lcm6lm47h27gzc7nif78f"))))
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/aws/smithy-go")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1sy7jwibmxlixklawfn6bfwvhnfzaw2lcm6lm47h27gzc7nif78f"))))
     (build-system go-build-system)
     (arguments '(#:import-path "github.com/aws/smithy-go"))
     (propagated-inputs
-      `(("go-github-com-jmespath-go-jmespath"
-         ,go-github-com-jmespath-go-jmespath)
-        ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)))
+     `(("go-github-com-jmespath-go-jmespath"
+        ,go-github-com-jmespath-go-jmespath)
+       ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)))
     (home-page "https://github.com/aws/smithy-go")
     (synopsis "Smithy Go")
     (description
-      "Package smithy provides the core components for a Smithy SDK.")
+     "Package smithy provides the core components for a Smithy SDK.")
     (license license:asl2.0)))
 
 (define-public go-github-com-aws-aws-sdk-go-v2-service-sts
