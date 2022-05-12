@@ -106,3 +106,31 @@ equal.")
      "Package sts provides the API client, operations, and parameter types for AWS
 Security Token Service.")
     (license license:asl2.0)))
+
+(define-public go-github-com-aws-aws-sdk-go-v2-service-sso
+  (package
+    (name "go-github-com-aws-aws-sdk-go-v2-service-sso")
+    (version "1.11.2")
+    (source
+      (origin
+        (method git-fetch)
+        (uri (git-reference
+               (url "https://github.com/aws/aws-sdk-go-v2")
+               (commit (string-append "v" version))))
+        (file-name (git-file-name name version))
+        (sha256
+          (base32 "0s1zmwzjkkhi97a4hqs5f5ki8r9kyf0d2rrjbjzgklzr9dka87il"))))
+    (build-system go-build-system)
+    (arguments
+      '(#:import-path
+        "github.com/aws/aws-sdk-go-v2/service/sso"
+        #:unpack-path
+        "github.com/aws/aws-sdk-go-v2"))
+    (propagated-inputs
+      `(("go-github-com-aws-smithy-go" ,go-github-com-aws-smithy-go)))
+    (home-page "https://github.com/aws/aws-sdk-go-v2")
+    (synopsis #f)
+    (description
+      "Package sso provides the API client, operations, and parameter types for AWS
+Single Sign-On.")
+    (license license:asl2.0)))
