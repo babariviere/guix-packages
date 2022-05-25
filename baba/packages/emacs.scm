@@ -113,10 +113,8 @@ EOF
         (modify-inputs (package-native-inputs emacs)
           (prepend gcc)))
        (inputs
-        `(("glibc" ,glibc)
-          ("libgccjit" ,libgccjit)
-          ("libxcomposite" ,libxcomposite) ;; FIXME belongs upstream
-          ,@(package-inputs emacs)))))))
+        (modify-inputs (package-inputs emacs)
+          (prepend glibc libgccjit libxcomposite)))))))
 
 (define emacs-from-git
   (lambda* (emacs #:key pkg-name pkg-version pkg-revision git-repo git-commit checksum)
