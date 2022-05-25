@@ -21,6 +21,7 @@
   #:use-module (guix packages)
   #:use-module (guix memoization)
   #:use-module (guix git-download)
+  #:use-module (guix gexp)
   #:use-module (guix utils)
   #:use-module (guix build utils)
   #:use-module (gnu packages autotools)
@@ -75,42 +76,42 @@ EOF
         (substitute-keyword-arguments (package-arguments emacs)
                                       ((#:make-flags flags ''())
                                        (if full-aot
-                                           `(cons* "NATIVE_FULL_AOT=1" ,flags)
+                                           #~(cons* "NATIVE_FULL_AOT=1" #$flags)
                                            flags))
                                       ((#:configure-flags flags)
-                                       `(cons* "--with-native-compilation" "--with-json" "--with-xinput2" "--with-sqlite3" "--with-x-toolkit=gtk3" "--with-xft" "--without-gsettings" "--without-gconf" ,flags))
+                                       #~(cons* "--with-native-compilation" "--with-json" "--with-xinput2" "--with-sqlite3" "--with-x-toolkit=gtk3" "--with-xft" "--without-gsettings" "--without-gconf" #$flags))
                                       ((#:phases phases)
-                                       `(modify-phases ,phases
-                                                       ;; Add build-time library paths for libgccjit.
-                                                       (add-before 'configure 'set-libgccjit-path
-                                                                   (lambda* (#:key inputs #:allow-other-keys)
-                                                                     (let ((libgccjit-libdir
-                                                                            (string-append (assoc-ref inputs "libgccjit")
-                                                                                           "/lib/gcc/" %host-type "/"
-                                                                                           ,(package-version libgccjit) "/")))
-                                                                       (setenv "LIBRARY_PATH"
-                                                                               (string-append libgccjit-libdir ":"
-                                                                                              (getenv "LIBRARY_PATH"))))
-                                                                     #t))
-                                                       ;; Add runtime library paths for libgccjit.
-                                                       (add-after 'unpack 'patch-driver-options
-                                                                  (lambda* (#:key inputs #:allow-other-keys)
-                                                                    (substitute* "lisp/emacs-lisp/comp.el"
-                                                                                 (("\\(defcustom native-comp-driver-options nil")
-                                                                                  (format
-                                                                                   #f "(defcustom native-comp-driver-options '(~s ~s ~s ~s)"
-                                                                                   (string-append
-                                                                                    "-B" (assoc-ref inputs "binutils") "/bin/")
-                                                                                   (string-append
-                                                                                    "-B" (assoc-ref inputs "glibc") "/lib/")
-                                                                                   (string-append
-                                                                                    "-B" (assoc-ref inputs "libgccjit") "/lib/")
-                                                                                   (string-append
-                                                                                    "-B" (assoc-ref inputs "libgccjit") "/lib/gcc/"))))
-                                                                    #t))))))
+                                       #~(modify-phases #$phases
+                                         ;; Add build-time library paths for libgccjit.
+                                         (add-before 'configure 'set-libgccjit-path
+                                           (lambda* (#:key inputs #:allow-other-keys)
+                                             (let ((libgccjit-libdir
+                                                    (string-append (assoc-ref inputs "libgccjit")
+                                                                   "/lib/gcc/" %host-type "/"
+                                                                   #$(package-version libgccjit) "/")))
+                                               (setenv "LIBRARY_PATH"
+                                                       (string-append libgccjit-libdir ":"
+                                                                      (getenv "LIBRARY_PATH"))))
+                                             #t))
+                                         ;; Add runtime library paths for libgccjit.
+                                         (add-after 'unpack 'patch-driver-options
+                                           (lambda* (#:key inputs #:allow-other-keys)
+                                             (substitute* "lisp/emacs-lisp/comp.el"
+                                               (("\\(defcustom native-comp-driver-options nil")
+                                                (format
+                                                 #f "(defcustom native-comp-driver-options '(~s ~s ~s ~s)"
+                                                 (string-append
+                                                  "-B" (assoc-ref inputs "binutils") "/bin/")
+                                                 (string-append
+                                                  "-B" (assoc-ref inputs "glibc") "/lib/")
+                                                 (string-append
+                                                  "-B" (assoc-ref inputs "libgccjit") "/lib/")
+                                                 (string-append
+                                                  "-B" (assoc-ref inputs "libgccjit") "/lib/gcc/"))))
+                                             #t))))))
        (native-inputs
-        `(("gcc" ,gcc)
-          ,@(package-native-inputs emacs)))
+        (modify-inputs (package-native-inputs emacs)
+          (prepend gcc)))
        (inputs
         `(("glibc" ,glibc)
           ("libgccjit" ,libgccjit)
