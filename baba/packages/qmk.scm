@@ -168,40 +168,26 @@
 
 (define-public qmk
   (package
-    (name "qmk")
-    (version "1.0.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (pypi-uri "qmk" version))
-        (sha256
-          (base32 "1jpr22k539yc1rhn69igvh0s7hrd40vkkgmrn0vwqj257k3ywqns"))))
+    (name "python-qmk")
+    (version "1.1.0")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "qmk" version))
+              (sha256
+               (base32
+                "1qd5rnl0v97d0qmfbp32a193lw90njp3dawvjq4gxdwfwv4pf5bp"))))
     (build-system python-build-system)
-    (propagated-inputs
-      (list python-hid
-            python-hjson
-            python-jsonschema
-            python-milc
-            python-pygments
-            python-pyusb
-            python-qmk-dotty-dict
-            python-setuptools))
-    (inputs
-     `(("setup.py" ,(plain-file "setup.py"
-				(string-join
-				 '("from setuptools import setup"
-				   "setup()")
-				 "\n")))))
-    (arguments
-     `(#:tests?
-       #f
-       #:phases
-       (modify-phases %standard-phases
-	 (add-before 'build 'add-setup-py
-	   (lambda* (#:key inputs #:allow-other-keys)
-	     (let ((setup-py (assoc-ref inputs "setup.py")))
-	       (copy-file setup-py "setup.py")))))))
+    (propagated-inputs (list python-hid
+                             python-hjson
+                             python-jsonschema
+                             python-milc
+                             python-pillow
+                             python-pygments
+                             python-pyusb
+                             python-qmk-dotty-dict
+                             python-setuptools))
     (home-page "")
     (synopsis "A program to help users work with QMK Firmware.")
-    (description "A program to help users work with QMK Firmware.")
+    (description
+     "This package provides a program to help users work with QMK Firmware.")
     (license license:expat)))
