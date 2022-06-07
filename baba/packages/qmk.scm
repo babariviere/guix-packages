@@ -68,15 +68,14 @@
   (package
     (name "python-spinners")
     (version "0.0.24")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (pypi-uri "spinners" version))
-        (sha256
-          (base32 "0zz2z6dpdjdq5z8m8w8dfi8by0ih1zrdq0caxm1anwhxg2saxdhy"))))
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "spinners" version))
+              (sha256
+               (base32
+                "0zz2z6dpdjdq5z8m8w8dfi8by0ih1zrdq0caxm1anwhxg2saxdhy"))))
     (build-system python-build-system)
-    (propagated-inputs (list python2-enum34))
-    (arguments `(#:tests? #f))
+    (propagated-inputs (list python-enum34))
     (home-page "https://github.com/manrajgrover/py-spinners")
     (synopsis "Spinners for terminals")
     (description "Spinners for terminals")
@@ -86,17 +85,14 @@
   (package
     (name "python-log-symbols")
     (version "0.0.14")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (pypi-uri "log-symbols" version))
-        (sha256
-          (base32 "0mh5d0igw33libfmbsr1ri1p1y644p36nwaa2w6kzrd8w5pvq2yg"))))
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "log_symbols" version))
+              (sha256
+               (base32
+                "0mh5d0igw33libfmbsr1ri1p1y644p36nwaa2w6kzrd8w5pvq2yg"))))
     (build-system python-build-system)
-    (propagated-inputs
-      (list python-colorama python2-enum34))
-    (arguments
-     `(#:tests? #f))
+    (propagated-inputs (list python-colorama python-enum34))
     (home-page "https://github.com/manrajgrover/py-log-symbols")
     (synopsis "Colored symbols for various log levels for Python")
     (description "Colored symbols for various log levels for Python")
