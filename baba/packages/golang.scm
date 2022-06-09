@@ -80,3 +80,27 @@ the operating system.")
     (synopsis #f)
     (description #f)
     (license license:asl2.0)))
+
+
+(define-public go-github-com-quasilyte-go-ruleguard-dsl
+  (package
+    (name "go-github-com-quasilyte-go-ruleguard-dsl")
+    (version "0.3.21")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/quasilyte/go-ruleguard")
+                    (commit (string-append "dsl/v" (go-version->git-ref version)))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0qad7igj77dcnahqaqzsw9302iq0m1jfi2rj0zz2nwscvxzz41af"))))
+    (build-system go-build-system)
+    (arguments
+     '(#:import-path "github.com/quasilyte/go-ruleguard/dsl"
+       #:unpack-path "github.com/quasilyte/go-ruleguard"
+       #:tests? #f))
+    (home-page "https://github.com/quasilyte/go-ruleguard")
+    (synopsis #f)
+    (description #f)
+    (license license:asl2.0)))
