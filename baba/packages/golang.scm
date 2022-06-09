@@ -55,3 +55,28 @@ the operating system.")
     (synopsis #f)
     (description #f)
     (license license:asl2.0)))
+
+
+(define-public go-github-com-moby-sys-mount
+  (package
+    (name "go-github-com-moby-sys-mount")
+    (version "0.3.3")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/moby/sys")
+                    (commit (string-append "mount/v" (go-version->git-ref version)))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "161dv3wwbh8zs2acfahzjmypb44aajd0dazh27fihn95h2kfzz6w"))))
+    (build-system go-build-system)
+    (arguments
+     '(#:import-path "github.com/moby/sys/mount"
+       #:unpack-path "github.com/moby/sys"
+       #:tests? #f))
+    (propagated-inputs `(("go-golang-org-x-sys" ,go-golang-org-x-sys)))
+    (home-page "https://github.com/moby/sys")
+    (synopsis #f)
+    (description #f)
+    (license license:asl2.0)))
