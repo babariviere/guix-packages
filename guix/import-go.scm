@@ -23,7 +23,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (guix import go)
+(define-module (guix import-go)
   #:use-module (guix build-system go)
   #:use-module (guix git)
   #:use-module (guix hash)
@@ -539,7 +539,7 @@ control system is being used."
                              `(string-append ,(if prefix
                                                   (string-append prefix "/v")
                                                   "v") version)
-                             (if prefix
+                             (if (and plain-version? prefix)
                                  `(string-append ,prefix "/" (go-version->git-ref version))
                                  '(go-version->git-ref version))))))
           (file-name (git-file-name name version))
@@ -547,7 +547,7 @@ control system is being used."
            (base32
             ,(bytevector->nix-base32-string
               (git-checkout-hash vcs-repo-url
-                                 (if prefix
+                                 (if (and prefix plain-version?)
                                      (string-append prefix "/" (go-version->git-ref version))
                                      (go-version->git-ref version))
                                  (hash-algorithm sha256))))))))
@@ -643,7 +643,7 @@ When VERSION is unspecified, the latest version available is used."
         (version ,(strip-v-prefix version*))
         (source
          ,(vcs->origin vcs-type vcs-repo-url version*
-                       (if (string=? module-path-sans-suffix vcs-import-prefix)
+                       (if (<= (string-length module-path-sans-suffix) (string-length vcs-import-prefix))
                            #f
                            (string-drop module-path-sans-suffix
                                         (+ 1 (string-length vcs-import-prefix))))))
