@@ -1,4 +1,10 @@
 (define-module (baba packages virtualization)
+  #:use-module (baba packages golang)
+  #:use-module (gnu packages golang)
+  #:use-module (guix build-system go)
+  #:use-module (guix download)
+  #:use-module (guix git-download)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix utils)
   #:use-module (gnu packages attr)
@@ -7,9 +13,18 @@
 (define-public lxd
   (package
     (inherit v:lxd)
-    (version (package-version v:lxd))
+    (version "5.2")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://github.com/lxc/lxd/releases/download/"
+                    "lxd-" version "/lxd-" version ".tar.gz"))
+              (sha256
+               (base32
+                "0k1fq3drwx5k8izycjgyzlv6vyss6n11qaqb12r373c4l4s2nbg2"))))
     (arguments
      (substitute-keyword-arguments (package-arguments v:lxd)
+       ((#:go go #t) go-1.18)
        ((#:phases phases)
         `(modify-phases ,phases
            (replace 'install
