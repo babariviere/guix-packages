@@ -6,7 +6,8 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix utils)
-  #:use-module (srfi srfi-1))
+  #:use-module (srfi srfi-1)
+  #:replace (go-golang-org-x-sys))
 
 (define-public go-1.18
   (package
@@ -241,7 +242,11 @@
                 "0ffvdyv8fz8jwwn8s7pp8kk5cfzrkrfxwsp26zzj0xxhwjn668hi"))))
     (build-system go-build-system)
     (arguments
-     '(#:import-path "golang.org/x/sys"))
+     `(#:import-path "golang.org/x/sys"
+       #:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'build))))
     (home-page "https://golang.org/x/sys")
     (synopsis "sys")
     (description
@@ -337,8 +342,11 @@ the operating system.")
                 "0qqgdwaiv2793ikfnpzi9dvsilfvpxizsgnzf0wkb13d7jw6cf9q"))))
     (build-system go-build-system)
     (arguments
-     '(#:import-path "github.com/go-ping/ping"))
-    (propagated-inputs `(("go-golang-org-x-sync" ,go-golang-org-x-sync) ("go-golang-org-x-net" ,go-golang-org-x-net)
+     '(#:import-path "github.com/go-ping/ping"
+       #:tests? #f))
+    (propagated-inputs `(("go-golang-org-x-sync" ,go-golang-org-x-sync)
+                         ("go-golang-org-x-sys" ,go-golang-org-x-sys)
+                         ("go-golang-org-x-net" ,go-golang-org-x-net)
                          ("go-github-com-google-uuid" ,go-github-com-google-uuid)))
     (home-page "https://github.com/go-ping/ping")
     (synopsis "go-ping")
@@ -361,7 +369,8 @@ the operating system.")
                 "13ixw1yx4bvcj66lkc8zgwf9j7gkvj686g991gycdsafvdvca0lj"))))
     (build-system go-build-system)
     (arguments
-     '(#:import-path "github.com/jessevdk/go-flags"))
+     '(#:import-path "github.com/jessevdk/go-flags"
+       #:tests? #f))
     (propagated-inputs `(("go-golang-org-x-sys" ,go-golang-org-x-sys)))
     (home-page "https://github.com/jessevdk/go-flags")
     (synopsis "go-flags: a go library for parsing command line arguments")
