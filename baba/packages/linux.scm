@@ -33,9 +33,9 @@ EOF
                 (method git-fetch)
                 (uri (git-reference
                       (url "https://evilpiepirate.org/git/bcachefs.git")
-                      (commit "ca639d9221b8eb7c94e5a0bc118d53d8b453c0cf")))
+                      (commit "2013939f34fa35173ebcf82106c45e75b465f3ab")))
                 (sha256
-                 (base32 "03krw388lak7yrbcv541vpind9v6v3x60ky0vfrss62dxi8nc2i5"))
+                 (base32 "1ls1b0j04ira5xpfgqcj26x9qf4gii9m4f2gpxwl21j7y77g0gf4"))
                 (file-name (git-file-name "linux-bcachefs" linux-libre-version)))
               '("x86_64-linux" "i686-linux" "armhf-linux" "aarch64-linux")
               #:configuration-file (@@ (gnu packages linux) kernel-config)

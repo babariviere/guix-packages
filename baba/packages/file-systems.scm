@@ -29,7 +29,7 @@ guix repl -L . <<EOF
 EOF
 |#
 
-(define bcachefs-commit "0766bee8fdf3973953fd3184f63dfe2a0760c08d")
+(define bcachefs-commit "319abbc65330d20daee499e841ffcdef06c60fb5")
 (define bcachefs-version (git-version "0.1" "15" bcachefs-commit))
 (define bcachefs-source
   (origin
@@ -38,7 +38,7 @@ EOF
          (url "https://evilpiepirate.org/git/bcachefs-tools.git")
          (commit bcachefs-commit)))
    (sha256
-    (base32 "14lgdbfxly7rv329vagprsa0mimkqm84qrvrqvmnikwwkvnyb0dr"))
+    (base32 "12ac1imkvaw3f5mp5nhxmp6707a0bx8qbzhfm9cgwmap24hc8d57"))
    (file-name (git-file-name "bcachefs-tools" bcachefs-version))))
 
 (define-public bcachefs-tools-git
