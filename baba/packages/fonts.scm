@@ -222,3 +222,22 @@ by Pragmata Pro, M+, and PF DIN Mono, designed to be the ideal font for
 programming.  Iosevka is completely generated from its source code.")
    (license (list license:silofl1.1 ;build artifacts (i.e., the fonts)
                   license:bsd-3))))
+
+(define-public font-inter
+  (package
+    (name "font-inter")
+    (version "3.19")
+    (source
+     (origin
+       (method url-fetch/zipbomb)
+       (uri (string-append "https://github.com/rsms/inter"
+                           "/releases/download/v" version
+                           "/Inter-" version ".zip"))
+       (sha256
+        (base32 "0ch0rk6nwd80y7vqbmrii9cr3zq6sq2gqpgkxdxsaqhp1livc2hm"))))
+    (build-system font-build-system)
+    (home-page "https://rsms.me/inter/")
+    (synopsis "The Inter typeface family")
+    (description
+     "Inter features a tall x-height to aid in readability of mixed-case and lower-case text. Several OpenType features are provided as well, like contextual alternates that adjusts punctuation depending on the shape of surrounding glyphs, slashed zero for when you need to disambiguate \"0\" from \"o\", tabular numbers, etc. ")
+    (license (list license:silofl1.1))))
