@@ -10,12 +10,12 @@
   #:use-module (guix utils))
 
 (define-public stumpwm-next
-  (let ((commit "9bfb9686e1185ec676489e610108ea50c12fd513")
-        (revision "1"))
+  (let ((commit "56a71bd9b8c90f2bbc2268ebbdcb934c9a56de21")
+        (revision "2"))
     (package
      (inherit stumpwm)
      (name "stumpwm")
-     (version (git-version "20.11" revision commit))
+     (version (git-version "22.05" revision commit))
      (source
       (origin
        (method git-fetch)
@@ -23,7 +23,7 @@
              (url "https://github.com/stumpwm/stumpwm")
              (commit commit)))
        (sha256
-        (base32 "1a950925f7314ajk7xcw1jwlfgg82zi0mnzb3sv3mp94jj1kkj5l"))
+        (base32 "0ia2nl2002cmavk8nn2awv85f2k2mv4v862y166idc1mwhpxbfg2"))
        (file-name (git-file-name name version))))
      (arguments
       (substitute-keyword-arguments (package-arguments stumpwm)
