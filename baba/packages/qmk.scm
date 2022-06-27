@@ -1,12 +1,34 @@
 (define-module (baba packages qmk)
   #:use-module (gnu packages)
   #:use-module (gnu packages libusb)
+  #:use-module (gnu packages python-build)
+  #:use-module (gnu packages check)
   #:use-module (gnu packages python-xyz)
   #:use-module (guix build-system python)
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages))
+
+(define-public python-setuptools-scm
+  (package
+    (name "python-setuptools-scm")
+    (version "7.0.2")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "setuptools_scm" version))
+              (sha256
+               (base32
+                "00iwwl1pkfcc1xwv5j3c7zmn5p38qawr6bagw745wgplhalbmbsk"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-importlib-metadata python-packaging
+                             python-setuptools python-tomli
+                             python-typing-extensions))
+    (native-inputs (list python-pytest python-virtualenv))
+    (home-page "https://github.com/pypa/setuptools_scm/")
+    (synopsis "the blessed package to manage your versions by scm tags")
+    (description "the blessed package to manage your versions by scm tags")
+    (license license:expat)))
 
 (define-public python-qmk-dotty-dict
   (package
