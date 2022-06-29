@@ -29,7 +29,7 @@ EOF
               linux-libre-version
               linux-libre-gnu-revision
               (origin
-                (inherit linux-libre-5.17-source)
+                (inherit linux-libre-source)
                 (method git-fetch)
                 (uri (git-reference
                       (url "https://evilpiepirate.org/git/bcachefs.git")
