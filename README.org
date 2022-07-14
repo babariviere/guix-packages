@@ -1,10 +1,1 @@
-* guix-packages
-
-** Import go module
-I have a small modification in the go importer to allow importing modules with tags format ~subdirectory/v0.0.0~.
-
-To use it:
-
-#+begin_src shell
-./pre-inst-env guix import-go my-package
-#+end_src
+* NOTE: No longer maintained. Please remove it from your channels list.
